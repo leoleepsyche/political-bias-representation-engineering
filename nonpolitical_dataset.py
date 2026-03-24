@@ -187,6 +187,18 @@ def get_political_statements_mixed():
     return political
 
 
+def get_prompt_template(statement: str) -> str:
+    """
+    使用与 Safety Layers 论文类似的 prompt 模板
+    """
+    return (
+        f"Below is an instruction that describes a task. "
+        f"Write a response that appropriately completes the request.\n"
+        f"### Instruction: {statement}\n"
+        f"### Response:"
+    )
+
+
 if __name__ == "__main__":
     nonpol = get_nonpolitical_statements()
     pol = get_political_statements_mixed()
