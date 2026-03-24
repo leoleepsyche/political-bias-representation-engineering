@@ -2,7 +2,7 @@
 Unified Dataset Loader for Political Bias Experiments
 
 支持多个数据源:
-1. Custom Political Dataset (expanded: 50 topics)
+1. Custom Political Dataset (current expanded set: 49 paired topics)
 2. OpinionQA (PEW American Trends Panel)
 3. P-Stance (Twitter political stance)
 4. Non-Political Baseline

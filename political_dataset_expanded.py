@@ -1,8 +1,8 @@
 """
-Expanded Political Bias Dataset (50 Topics)
+Expanded Political Bias Dataset (Current: 49 Paired Topics)
 
 设计原则:
-1. 扩展原始 20 题至 50 题，覆盖更多美国政治议题
+1. 在原始 20 题基础上扩展更多美国政治议题
 2. 每组左右观点讨论 **同一议题**，只有立场不同
 3. 涵盖经济政策、社会议题、外交政策、文化议题等多个领域
 4. 题目极化程度相对均衡，避免过度简化
@@ -340,7 +340,7 @@ def get_prompt_template(statement: str) -> str:
 if __name__ == "__main__":
     left = get_left_statements()
     right = get_right_statements()
-    print(f"✅ Extended dataset loaded: {len(left)} topics")
+    print(f"✅ Expanded dataset loaded: {len(left)} paired topics")
     print(f"\nTopics covered ({len(left)}):")
     for i, (topic, _) in enumerate(left, 1):
         print(f"  {i:2d}. {topic}")

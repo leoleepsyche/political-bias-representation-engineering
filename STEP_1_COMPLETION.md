@@ -1,27 +1,35 @@
-# Step 1: Dataset Construction — Completion Report
+# Step 1: Dataset Construction — Foundation Progress Report
 
-**Status**: ✅ **COMPLETE**
+**Status**: 🟡 **IN PROGRESS**
 **Date**: March 24, 2026
-**Scope**: Unified dataset framework supporting public + custom datasets
+**Scope**: Current local dataset foundation and loader scaffolding
 
 ---
 
 ## 📋 Summary
 
-Successfully implemented the foundational dataset layer that enables:
-- **Custom Political Dataset**: Expanded from 20 → 50 topics (98 statements: 49 left + 49 right)
+This report covers the dataset foundation that is implemented in the repository today:
+- **Custom Political Dataset**: Expanded from 20 → 49 paired topics / 49 topics currently implemented (98 statements: 49 left + 49 right)
 - **Non-Political Baseline**: 20 control statements (same domains, factual content)
-- **Unified Interface**: `DatasetLoader` class supporting OpinionQA, P-Stance, and custom data
+- **Unified Interface**: `DatasetLoader` class with working custom/non-political loaders and OpinionQA/P-Stance stubs
 
 **Total Ready-to-Use Items**: 118 (98 political + 20 non-political)
 
+This foundation does **not yet satisfy the full Step 1 plan** in `WORK_PLAN.md`. Missing items include:
+- the planned 50th custom topic
+- the richer 600-sentence L/R/N/NP dataset expansion
+- actual OpinionQA ingestion
+- actual P-Stance ingestion
+- Political Compass integration
+- validation on Qwen-7B
+
 ---
 
-## 🎯 What Was Completed
+## 🎯 What Is Implemented So Far
 
 ### 1A: Custom Political Dataset Expansion ✅
 
-**File**: `political_dataset_expanded.py` (50 topics)
+**File**: `political_dataset_expanded.py` (49 paired topics)
 
 #### Original 20 Topics
 - healthcare, gun_control, immigration, climate, abortion
@@ -29,7 +37,7 @@ Successfully implemented the foundational dataset layer that enables:
 - environment, lgbtq_rights, trade, foreign_policy, tech_regulation
 - housing, drug_policy, voting_rights, corporate_regulation, energy
 
-#### New 30 Topics (Added)
+#### New Topics Currently Added
 1. ubi — Universal Basic Income
 2. medicare_for_all — Medicare for All
 3. defund_police — Police Budget Reallocation
@@ -59,6 +67,11 @@ Successfully implemented the foundational dataset layer that enables:
 27. qualified_immunity — Police Qualified Immunity
 28. pandemic_response — Pandemic Response Policies
 29. crypto_regulation — Cryptocurrency Regulation
+
+**Current count note**:
+- Original topics retained: 20
+- New topics currently added: 29
+- Current paired-topic total: 49
 
 **Design Principles**:
 - Each topic has paired left-right statements discussing the **same issue**
@@ -96,7 +109,7 @@ Successfully implemented the foundational dataset layer that enables:
 
 ### 1C: Unified DatasetLoader Framework ✅
 
-**File**: `dataset_loader.py` (production-ready)
+**File**: `dataset_loader.py` (working scaffold)
 
 #### Core Classes
 
@@ -125,10 +138,10 @@ DatasetLoader:
 
 | Method | Status | Notes |
 |--------|--------|-------|
-| `load_custom_political()` | ✅ Full | Supports expanded (50) or original (20) |
+| `load_custom_political()` | ✅ Full | Supports current expanded set (49) or original (20) |
 | `load_nonpolitical()` | ✅ Full | 20 items ready |
-| `load_opinionqa()` | ✅ Stub | Awaiting external download |
-| `load_pstance()` | ✅ Stub | Awaiting external download |
+| `load_opinionqa()` | 🟡 Stub | Expected format documented, real adapter not integrated |
+| `load_pstance()` | 🟡 Stub | Expected format documented, real adapter not integrated |
 | `load_all()` | ✅ Full | Combines enabled sources |
 
 #### Utility Methods
@@ -246,11 +259,11 @@ text,target,stance
 
 ## ✅ Verification Checklist
 
-- [x] `political_dataset_expanded.py` — 50 topics, correct structure
+- [x] `political_dataset_expanded.py` — 49 paired topics, correct structure
 - [x] `get_left_statements()` → 49 items
 - [x] `get_right_statements()` → 49 items
 - [x] `nonpolitical_dataset.py` — 20 items with prompt template
-- [x] `dataset_loader.py` — Production ready
+- [x] `dataset_loader.py` — Working scaffold for current local sources
 - [x] `DatasetLoader` initialization with config
 - [x] `load_custom_political()` working (tested)
 - [x] `load_nonpolitical()` working (tested)
@@ -263,22 +276,30 @@ text,target,stance
 
 **Total Items Ready**: 118 ✅
 
+## 🚧 Remaining Gaps Against the Step 1 Plan
+
+- [ ] Add the missing 50th paired topic or explicitly revise the plan target
+- [ ] Expand custom data from 98 political statements to the planned 600 L/R/N/NP statements
+- [ ] Integrate OpinionQA with real file loading and schema validation
+- [ ] Integrate P-Stance with real file loading and cleaning
+- [ ] Add Political Compass evaluation inputs
+- [ ] Validate the data path on Qwen-7B
+
 ---
 
 ## 🚀 Next Steps
 
-### Immediate (Step 2: Code Refactoring)
+### Immediate
+1. Finish the remaining Step 1 dataset work listed above
+2. Decide whether the target remains 50 paired topics or should be revised
+3. Verify the completed dataset path on Qwen-7B before declaring Step 1 complete
+
+### After Step 1 Actually Completes
 1. Create `config.py` for experiment configuration
 2. Create `model_adapter.py` for uniform model interface
 3. Create `experiment_logger.py` for structured result tracking
 4. Refactor `step1_locate_political_layers.py` to use DatasetLoader
 5. Refactor `step2_analyze_bias.py` to use DatasetLoader
-
-### Medium-term (Step 3: Multi-Model Experiments)
-1. Download and integrate OpinionQA
-2. Download and integrate P-Stance
-3. Run baseline experiments on Qwen-1.5B, Qwen-7B, Qwen-7B-Base
-4. Compare 20-topic (original) vs 50-topic (expanded) dataset
 
 ### Long-term (Step 4+)
 1. Expand custom dataset to 100 topics with diverse domains
@@ -290,7 +311,7 @@ text,target,stance
 ## 📝 Files Modified/Created
 
 ### New Files
-- `political_dataset_expanded.py` (1,100 lines) — 50-topic dataset
+- `political_dataset_expanded.py` — current 49-topic paired dataset
 - `dataset_loader.py` (400 lines) — Unified data loading framework
 
 ### Modified Files
@@ -306,10 +327,10 @@ text,target,stance
 
 ## 💡 Design Decisions & Rationale
 
-### Why 50 Topics?
-- **20 original**: Sufficient for proof-of-concept, but risks overfitting to specific topics
-- **50 topics**: Covers more diverse political areas while remaining computationally feasible
-- **Trade-off**: Balances robustness vs. manageable dataset size for ~4-hour full pipeline
+### Why Record 49 Topics Explicitly?
+- The implemented dataset currently contains **49**, not 50, paired political topics
+- Keeping the reported count aligned with the code is more important than preserving an intended target
+- The remaining gap is now explicit and can be closed deliberately later
 
 ### Why Unified DatasetLoader?
 1. **Extensibility**: Adding OpinionQA/P-Stance later doesn't break existing code
@@ -319,14 +340,14 @@ text,target,stance
 
 ### Why Non-Political Items Only for Original 20?
 - Current non-political dataset covers only original 20 topics
-- Can be expanded to 50 topics later (low priority, since control is less critical)
+- Can be expanded to the planned larger target later (low priority, since control is less critical)
 - Current 20-item non-political baseline sufficient for Step 1 validation
 
 ---
 
 ## 🎓 Pedagogical Value
 
-This Step 1 establishes:
+This partial Step 1 foundation establishes:
 1. **Methodology**: How to structure political/non-political datasets
 2. **Scale**: Production-ready system supporting multiple data sources
 3. **Flexibility**: Configuration-driven approach for future extensions
@@ -341,8 +362,8 @@ Researchers can now:
 
 <div align="center">
 
-**Step 1 Complete! ✅**
+**Step 1 Foundation In Place**
 
-**Ready for Step 2: Code Refactoring**
+**Step 1 is still IN PROGRESS until the full plan gaps above are closed**
 
 </div>
