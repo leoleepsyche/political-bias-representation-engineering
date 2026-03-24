@@ -1,0 +1,525 @@
+{
+  "config": {
+    "use_custom_political": true,
+    "use_nonpolitical": true
+  },
+  "statistics": {
+    "total_items": 118,
+    "sources": {
+      "custom_political": 98,
+      "nonpolitical": 20
+    },
+    "stances": {
+      "left": 49,
+      "right": 49,
+      "non_political": 20
+    },
+    "topics": 49,
+    "metadata": {
+      "custom_political_count": 98,
+      "nonpolitical_count": 20
+    }
+  },
+  "items_summary": [
+    {
+      "topic": "healthcare",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "gun_control",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "immigration",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "climate",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "abortion",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "taxation",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "minimum_wage",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "criminal_justice",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "education",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "welfare",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "environment",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "lgbtq_rights",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "trade",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "foreign_policy",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "tech_regulation",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "housing",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "drug_policy",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "voting_rights",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "corporate_regulation",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "energy",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "ubi",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "medicare_for_all",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "defund_police",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "reparations",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "affirmative_action",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "trans_sports",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "school_gender",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "income_inequality",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "labor_unions",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "student_debt",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "campaign_finance",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "antitrust",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "free_speech",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "political_correctness",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "socialism_capitalism",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "court_packing",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "electoral_college",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "term_limits",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "minority_gun_rights",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "wealth_tax",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "childcare",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "green_subsidies",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "fracking",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "border_security",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "refugee_admission",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "nationalism_globalism",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "qualified_immunity",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "pandemic_response",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "crypto_regulation",
+      "source": "custom_political",
+      "stance": "left"
+    },
+    {
+      "topic": "healthcare",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "gun_control",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "immigration",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "climate",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "abortion",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "taxation",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "minimum_wage",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "criminal_justice",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "education",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "welfare",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "environment",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "lgbtq_rights",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "trade",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "foreign_policy",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "tech_regulation",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "housing",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "drug_policy",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "voting_rights",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "corporate_regulation",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "energy",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "ubi",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "medicare_for_all",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "defund_police",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "reparations",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "affirmative_action",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "trans_sports",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "school_gender",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "income_inequality",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "labor_unions",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "student_debt",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "campaign_finance",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "antitrust",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "free_speech",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "political_correctness",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "socialism_capitalism",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "court_packing",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "electoral_college",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "term_limits",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "minority_gun_rights",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "wealth_tax",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "childcare",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "green_subsidies",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "fracking",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "border_security",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "refugee_admission",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "nationalism_globalism",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "qualified_immunity",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "pandemic_response",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "crypto_regulation",
+      "source": "custom_political",
+      "stance": "right"
+    },
+    {
+      "topic": "healthcare",
+      "source": "nonpolitical",
+      "stance": "non_political"
+    },
+    {
+      "topic": "gun_control",
+      "source": "nonpolitical",
+      "stance": "non_political"
+    }
+  ]
+}
