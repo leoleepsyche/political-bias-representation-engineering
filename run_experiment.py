@@ -55,6 +55,79 @@ def parse_args():
 # 2. 模型加载
 # ============================================================
 
+def _resolve_attr_path(obj, path: str):
+    """解析点分隔属性路径，不存在时返回 None。"""
+    cur = obj
+    for part in path.split("."):
+        if not hasattr(cur, part):
+            return None
+        cur = getattr(cur, part)
+    return cur
+
+
+def get_transformer_layers(model):
+    """
+    返回 transformer block 列表。
+    当前支持:
+      - Qwen / Llama / Baichuan: model.layers
+      - ChatGLM: transformer.encoder.layers
+    """
+    for path in (
+        "model.layers",
+        "transformer.encoder.layers",
+        "transformer.layers",
+        "transformer.h",
+    ):
+        layers = _resolve_attr_path(model, path)
+        if layers is not None:
+            return layers
+    raise AttributeError(
+        f"Unsupported model architecture for layer access: {type(model).__name__}"
+    )
+
+
+def get_num_hidden_layers(model) -> int:
+    """统一获取模型层数。"""
+    for attr in ("num_hidden_layers", "num_layers", "n_layer", "n_layers"):
+        value = getattr(model.config, attr, None)
+        if isinstance(value, int):
+            return value
+
+    layers = get_transformer_layers(model)
+    if hasattr(layers, "__len__"):
+        return len(layers)
+
+    raise AttributeError(
+        f"Could not determine number of hidden layers for {type(model).__name__}"
+    )
+
+
+def _last_token_vector(hidden_state: torch.Tensor, batch_size: int, seq_len: int) -> torch.Tensor:
+    """
+    提取最后一个 token 的隐藏向量。
+
+    兼容两种常见布局:
+      - (batch, seq, hidden)
+      - (seq, batch, hidden) 例如 ChatGLM
+    """
+    if hidden_state.ndim != 3:
+        raise ValueError(f"Expected 3D hidden state, got shape {tuple(hidden_state.shape)}")
+
+    if hidden_state.shape[0] == batch_size and hidden_state.shape[1] == seq_len:
+        return hidden_state[0, -1, :]
+    if hidden_state.shape[0] == seq_len and hidden_state.shape[1] == batch_size:
+        return hidden_state[-1, 0, :]
+
+    if batch_size == 1 and hidden_state.shape[0] == 1:
+        return hidden_state[0, -1, :]
+    if batch_size == 1 and hidden_state.shape[1] == 1:
+        return hidden_state[-1, 0, :]
+
+    raise ValueError(
+        f"Unsupported hidden-state layout {tuple(hidden_state.shape)} "
+        f"for batch_size={batch_size}, seq_len={seq_len}"
+    )
+
 def load_model_and_tokenizer(model_name: str, quantize: bool, device: str):
     """加载模型和分词器"""
     from transformers import AutoModelForCausalLM, AutoTokenizer
@@ -115,7 +188,7 @@ def load_model_and_tokenizer(model_name: str, quantize: bool, device: str):
         model = model.to(load_to_device)
     model.eval()
 
-    num_layers = model.config.num_hidden_layers
+    num_layers = get_num_hidden_layers(model)
     print(f"Model loaded successfully! Layers: {num_layers}")
     print(f"Model dtype: {next(model.parameters()).dtype}")
 
@@ -147,13 +220,19 @@ def extract_hidden_states(model, tokenizer, text: str, device: str) -> list[torc
 
     # outputs.hidden_states: tuple of (num_layers + 1) tensors
     # 第 0 个是 embedding layer, 后面是每个 transformer layer 的输出
-    # 每个 tensor shape: (batch_size, seq_len, hidden_dim)
+    # 常见布局:
+    #   - (batch_size, seq_len, hidden_dim)
+    #   - (seq_len, batch_size, hidden_dim) 例如 ChatGLM
     hidden_states = outputs.hidden_states
+    if hidden_states is None:
+        raise ValueError(f"Model {type(model).__name__} did not return hidden_states")
+
+    batch_size, seq_len = inputs["input_ids"].shape[:2]
 
     # 取每层最后一个 token 的向量 (与 Safety Layers 一致)
     last_token_vectors = []
     for layer_idx, hs in enumerate(hidden_states):
-        vec = hs[0, -1, :].detach().cpu().float()  # (hidden_dim,)
+        vec = _last_token_vector(hs, batch_size, seq_len).detach().cpu().float()
         last_token_vectors.append(vec)
 
     return last_token_vectors  # list of (num_layers+1) tensors

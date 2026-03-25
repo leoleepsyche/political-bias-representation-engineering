@@ -60,3 +60,11 @@ models/
 *.tmp
 *.bak
 *.log
+
+# Archived experiment artifacts committed on purpose
+!model_results/
+!model_results/**/
+!model_results/**/*.md
+!model_results/**/*.npz
+!model_results/**/*.png
+!model_results/**/*.json

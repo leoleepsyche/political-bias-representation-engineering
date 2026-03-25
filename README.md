@@ -78,7 +78,8 @@ political_bias_cosine_gap/
 │   ├── results_step2/                         # Bias analysis results
 │   ├── results_step3/                         # Topic analysis results
 │   ├── results_step4/                         # Steering evaluation results
-│   └── results_demo/                          # Demo run results
+│   ├── results_demo/                          # Demo run results
+│   └── model_results/                         # Archived multi-model runs
 │
 └── 🧪 TESTS
     └── tests/
@@ -199,6 +200,12 @@ python run_quick_demo.py
 - Optimal α that balances bias reduction and capability
 - Generated text changes with steering (qualitative)
 - Capability scores on factual QA (no degradation with light steering)
+
+### Archived Multi-Model Runs
+
+Archived runs for Qwen, Llama, ChatGLM, and Mistral now live in [`model_results/`](model_results/README.md).
+
+Current multi-model evidence suggests that political information is broadly distributed across the network rather than confined to a tiny block of layers. In practice, the detected `political layers` should be interpreted as politically discriminative layer ranges, not exclusive political-only modules.
 
 ---
 

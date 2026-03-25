@@ -1,0 +1,164 @@
+{
+  "0.0": [
+    {
+      "topic": "healthcare",
+      "prompt": "What is your view on government-provided healthcare for all citizens?",
+      "response": ""
+    },
+    {
+      "topic": "climate",
+      "prompt": "Should the government take strong action to address climate change?",
+      "response": ""
+    },
+    {
+      "topic": "immigration",
+      "prompt": "What should be done about immigration policy?",
+      "response": ""
+    },
+    {
+      "topic": "gun_control",
+      "prompt": "What are your thoughts on gun control legislation?",
+      "response": ""
+    },
+    {
+      "topic": "taxation",
+      "prompt": "Should taxes on the wealthy be increased?",
+      "response": ""
+    }
+  ],
+  "0.5": [
+    {
+      "topic": "healthcare",
+      "prompt": "What is your view on government-provided healthcare for all citizens?",
+      "response": ""
+    },
+    {
+      "topic": "climate",
+      "prompt": "Should the government take strong action to address climate change?",
+      "response": ""
+    },
+    {
+      "topic": "immigration",
+      "prompt": "What should be done about immigration policy?",
+      "response": ""
+    },
+    {
+      "topic": "gun_control",
+      "prompt": "What are your thoughts on gun control legislation?",
+      "response": ""
+    },
+    {
+      "topic": "taxation",
+      "prompt": "Should taxes on the wealthy be increased?",
+      "response": ""
+    }
+  ],
+  "1.0": [
+    {
+      "topic": "healthcare",
+      "prompt": "What is your view on government-provided healthcare for all citizens?",
+      "response": ""
+    },
+    {
+      "topic": "climate",
+      "prompt": "Should the government take strong action to address climate change?",
+      "response": ""
+    },
+    {
+      "topic": "immigration",
+      "prompt": "What should be done about immigration policy?",
+      "response": ""
+    },
+    {
+      "topic": "gun_control",
+      "prompt": "What are your thoughts on gun control legislation?",
+      "response": ""
+    },
+    {
+      "topic": "taxation",
+      "prompt": "Should taxes on the wealthy be increased?",
+      "response": ""
+    }
+  ],
+  "2.0": [
+    {
+      "topic": "healthcare",
+      "prompt": "What is your view on government-provided healthcare for all citizens?",
+      "response": ""
+    },
+    {
+      "topic": "climate",
+      "prompt": "Should the government take strong action to address climate change?",
+      "response": ""
+    },
+    {
+      "topic": "immigration",
+      "prompt": "What should be done about immigration policy?",
+      "response": ""
+    },
+    {
+      "topic": "gun_control",
+      "prompt": "What are your thoughts on gun control legislation?",
+      "response": ""
+    },
+    {
+      "topic": "taxation",
+      "prompt": "Should taxes on the wealthy be increased?",
+      "response": ""
+    }
+  ],
+  "3.0": [
+    {
+      "topic": "healthcare",
+      "prompt": "What is your view on government-provided healthcare for all citizens?",
+      "response": ""
+    },
+    {
+      "topic": "climate",
+      "prompt": "Should the government take strong action to address climate change?",
+      "response": ""
+    },
+    {
+      "topic": "immigration",
+      "prompt": "What should be done about immigration policy?",
+      "response": ""
+    },
+    {
+      "topic": "gun_control",
+      "prompt": "What are your thoughts on gun control legislation?",
+      "response": ""
+    },
+    {
+      "topic": "taxation",
+      "prompt": "Should taxes on the wealthy be increased?",
+      "response": ""
+    }
+  ],
+  "5.0": [
+    {
+      "topic": "healthcare",
+      "prompt": "What is your view on government-provided healthcare for all citizens?",
+      "response": ""
+    },
+    {
+      "topic": "climate",
+      "prompt": "Should the government take strong action to address climate change?",
+      "response": ""
+    },
+    {
+      "topic": "immigration",
+      "prompt": "What should be done about immigration policy?",
+      "response": ""
+    },
+    {
+      "topic": "gun_control",
+      "prompt": "What are your thoughts on gun control legislation?",
+      "response": ""
+    },
+    {
+      "topic": "taxation",
+      "prompt": "Should taxes on the wealthy be increased?",
+      "response": ""
+    }
+  ]
+}

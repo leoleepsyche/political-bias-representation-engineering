@@ -19,6 +19,7 @@ Step 4: Political Bias Steering Intervention + Evaluation
 
 import argparse
 import random
+from types import MethodType
 from pathlib import Path
 
 import numpy as np
@@ -26,7 +27,7 @@ import torch
 import torch.nn.functional as F
 from tqdm import tqdm
 
-from run_experiment import load_model_and_tokenizer
+from run_experiment import get_transformer_layers, load_model_and_tokenizer
 from political_dataset import (
     get_left_statements,
     get_right_statements,
@@ -62,6 +63,73 @@ def load_direction_vectors(step2_dir):
     print(f"  Loaded direction vectors from Step 2")
     print(f"  Political layers: [{int(data['pol_lower'])}, {int(data['pol_upper'])}]")
     return data
+
+
+def prepare_generation_inputs(tokenizer, prompt: str, device: str):
+    """
+    统一构造 generation 输入，兼容不同 tokenizer 接口。
+
+    优先级:
+      1. 已配置 chat_template 的 tokenizer
+      2. ChatGLM 风格的 build_chat_input
+      3. 通用 User/Assistant 文本模板
+    """
+    messages = [{"role": "user", "content": prompt}]
+
+    if hasattr(tokenizer, "apply_chat_template") and getattr(tokenizer, "chat_template", None):
+        text = tokenizer.apply_chat_template(
+            messages, tokenize=False, add_generation_prompt=True
+        )
+        inputs = tokenizer(text, return_tensors="pt")
+    elif hasattr(tokenizer, "build_chat_input"):
+        inputs = tokenizer.build_chat_input(prompt)
+    else:
+        text = f"User: {prompt}\nAssistant:"
+        inputs = tokenizer(text, return_tensors="pt")
+
+    if hasattr(inputs, "to"):
+        return inputs.to(device)
+    return {k: v.to(device) for k, v in inputs.items()}
+
+
+def ensure_generation_compat(model):
+    """
+    为带 remote code 的旧模型补一个 generation 兼容层。
+
+    某些模型仓库仍会调用 transformers 旧版本中的
+    `_extract_past_from_model_output`，但在较新的 transformers
+    中这个 helper 已经不存在。这里按当前 generate 需要的最小
+    接口补回去，避免 ChatGLM 一类模型在 behavioral/capability
+    评估时中断。
+    """
+    if hasattr(model, "_extract_past_from_model_output"):
+        return
+
+    if not hasattr(model, "_update_model_kwargs_for_generation"):
+        return
+
+    def _extract_past_from_model_output(self, outputs, standardize_cache_format=False):
+        del standardize_cache_format
+
+        past = None
+        if hasattr(outputs, "past_key_values") and outputs.past_key_values is not None:
+            past = outputs.past_key_values
+        elif hasattr(outputs, "mems") and outputs.mems is not None:
+            past = outputs.mems
+        elif hasattr(outputs, "past_buckets_states") and outputs.past_buckets_states is not None:
+            past = outputs.past_buckets_states
+        elif isinstance(outputs, dict):
+            for key in ("past_key_values", "mems", "past_buckets_states"):
+                if key in outputs and outputs[key] is not None:
+                    past = outputs[key]
+                    break
+
+        return ("past_key_values", past)
+
+    model._extract_past_from_model_output = MethodType(
+        _extract_past_from_model_output, model
+    )
+    print("  Applied generation compatibility patch")
 
 
 # ============================================================
@@ -114,10 +182,11 @@ class PoliticalSteeringHook:
     def register(self, model):
         """注册 hooks 到 political layers"""
         self.remove()  # 先清理旧的
+        layer_modules = get_transformer_layers(model)
         for layer_idx in range(self.pol_lower, self.pol_upper + 1):
             if layer_idx < len(self.per_layer_direction):
                 try:
-                    layer_module = model.model.layers[layer_idx]
+                    layer_module = layer_modules[layer_idx]
                     hook = layer_module.register_forward_hook(self._make_hook(layer_idx))
                     self.hooks.append(hook)
                 except (AttributeError, IndexError):
@@ -269,16 +338,7 @@ def evaluate_behavioral(model, tokenizer, device, hook, alphas,
 
         generations = []
         for topic, prompt in EVAL_PROMPTS:
-            messages = [{"role": "user", "content": prompt}]
-
-            # 使用 chat template
-            if hasattr(tokenizer, "apply_chat_template"):
-                text = tokenizer.apply_chat_template(
-                    messages, tokenize=False, add_generation_prompt=True)
-            else:
-                text = f"User: {prompt}\nAssistant:"
-
-            inputs = tokenizer(text, return_tensors="pt").to(device)
+            inputs = prepare_generation_inputs(tokenizer, prompt, device)
 
             with torch.no_grad():
                 output_ids = model.generate(
@@ -343,15 +403,7 @@ def evaluate_capability(model, tokenizer, device, hook, alphas,
         total = len(CAPABILITY_QA)
 
         for category, question, expected in CAPABILITY_QA:
-            messages = [{"role": "user", "content": question}]
-
-            if hasattr(tokenizer, "apply_chat_template"):
-                text = tokenizer.apply_chat_template(
-                    messages, tokenize=False, add_generation_prompt=True)
-            else:
-                text = f"User: {question}\nAssistant:"
-
-            inputs = tokenizer(text, return_tensors="pt").to(device)
+            inputs = prepare_generation_inputs(tokenizer, question, device)
 
             with torch.no_grad():
                 output_ids = model.generate(
@@ -494,6 +546,7 @@ def main():
     model, tokenizer, device, num_layers = load_model_and_tokenizer(
         args.model, quantize=False, device=args.device
     )
+    ensure_generation_compat(model)
 
     # 创建 steering hook
     hook = PoliticalSteeringHook(
